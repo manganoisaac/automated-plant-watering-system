@@ -1,0 +1,9 @@
+CompileFlags:
+  Add:
+    - "-I/home/isaac/.arduino15/packages/esp32/hardware/esp32/2.0.14/cores/esp32"
+    - "-I/home/isaac/.arduino15/packages/esp32/hardware/esp32/2.0.14/variants/esp32s3"
+    - "-I/home/isaac/.arduino15/packages/esp32/hardware/esp32/2.0.14/libraries/WiFi/src"
+    - "-I/home/isaac/.arduino15/packages/esp32/hardware/esp32/2.0.14/libraries/HTTPClient/src"
+    - "-I/home/isaac/Arduino/libraries/ArduinoJson/src"
+    - "-I/home/isaac/Arduino/libraries/Adafruit_MQTT_Library"
+    - "-I/home/isaac/Downloads/uni/automation/assignment/ESP32_Assignment"
