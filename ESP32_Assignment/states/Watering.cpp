@@ -1,4 +1,5 @@
 #include "Watering.h"
+#include "../constants.h"
 #include "../controller/Controller.h"
 #include "Arduino.h"
 #include "HardwareSerial.h"
@@ -11,15 +12,15 @@ void Watering::next(Controller *controller) {
   controller->waterLowOff();
 
   // read sensors
-  auto moisture = controller->readMoisture();
+  auto dryness = controller->readMoisture();
 
   // notify observers
-  controller->notify("moisture", std::to_string(moisture));
+  controller->notify(constants::event_dryness, std::to_string(dryness));
 
   // if soil is moist set to idle
-  if (moisture < 3000) {
+  if (dryness < constants::lower_dryness_threshold) {
     Serial.println("Switching to Idle");
-    static auto new_state = Idle();
-    controller->setState(&new_state);
+    this->to_idle(controller);
+    return;
   }
 }

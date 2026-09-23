@@ -1,6 +1,9 @@
 #include "Controller.h"
 #include "../actuators/IActuator.h"
+#include "../logger/FaultDetector.h"
+#include "../logger/FaultStatus.h"
 #include "../states/IState.h"
+#include <vector>
 
 void Controller::setState(IState *state) { this->state = state; }
 
@@ -29,6 +32,10 @@ void Controller::addHeatDetector(ISensor *heat_detector) {
   this->heat_detector->setup();
 }
 
+void Controller::addFaultDetector(FaultDetector *fault_detector) {
+  this->fault_detector = fault_detector;
+}
+
 void Controller::registerObserver(IObserver *observer) {
   observers.push_back(observer);
 };
@@ -44,6 +51,10 @@ float Controller::readUltrasonic() { return ultrasonic_sensor->read(); }
 float Controller::readMoisture() { return moisture_sensor->read(); }
 
 float Controller::readHeatDetector() { return heat_detector->read(); }
+
+std::vector<FaultStatus> Controller::readFaultDetector() {
+  return fault_detector->status();
+}
 
 void Controller::pumpOn() { pump_relay->turnOn(); }
 

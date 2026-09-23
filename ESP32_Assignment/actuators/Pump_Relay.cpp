@@ -4,8 +4,11 @@
 
 PumpRelay::PumpRelay(int pin) : pin(pin) {};
 
-void PumpRelay::setup() { pinMode(pin, OUTPUT); }
+void PumpRelay::setup() {
+  pinMode(pin, OUTPUT);
+  digitalWrite(pin, HIGH);
+}
 
-void PumpRelay::turnOn() { digitalWrite(pin, HIGH); }
+void PumpRelay::turnOn() { digitalWrite(pin, LOW); }
 
-void PumpRelay::turnOff() { digitalWrite(pin, LOW); }
+void PumpRelay::turnOff() { digitalWrite(pin, HIGH); }

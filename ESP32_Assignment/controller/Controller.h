@@ -2,6 +2,8 @@
 #define CONTROLLER_H
 
 #include "../actuators/IActuator.h"
+#include "../logger/FaultDetector.h"
+#include "../logger/FaultStatus.h"
 #include "../logger/IObserver.h"
 #include "../sensors/ISensor.h"
 #include "../states/IState.h"
@@ -10,6 +12,7 @@
 class Controller {
 private:
   // TODO: Use smart pointers (unique pointers)
+  FaultDetector *fault_detector;
   ISensor *ultrasonic_sensor;
   ISensor *moisture_sensor;
   ISensor *heat_detector;
@@ -31,6 +34,8 @@ public:
 
   void addHeatDetector(ISensor *heat_detector);
 
+  void addFaultDetector(FaultDetector *fault_detector);
+
   void registerObserver(IObserver *observer);
 
   void notify(std::string event, std::string data);
@@ -40,6 +45,8 @@ public:
   float readMoisture();
 
   float readHeatDetector();
+
+  std::vector<FaultStatus> readFaultDetector();
 
   void pumpOn();
 

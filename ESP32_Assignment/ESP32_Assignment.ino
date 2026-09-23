@@ -1,5 +1,6 @@
 #include "sensors/Moisture_Sensor.h"
 #include "secrets.h"
+#include "constants.h"
 #define MOISTURE_PIN 4
 #define ULTRASONIC_TRIG_PIN 5
 #define ULTRASONIC_ECHO_PIN 6
@@ -26,12 +27,18 @@
 #include "states/Water_Empty.cpp"
 #include "states/Idle_Hot_Day.h"
 #include "states/Idle_Hot_Day.cpp"
+#include "states/Error.h"
+#include "states/Error.cpp"
+#include "states/StateBase.h"
+#include "states/StateBase.cpp"
 #include "wifi/Wifi_Manager.h"
 #include "wifi/Wifi_Manager.cpp"
 #include "logger/AdaFruit.h"
 #include "logger/AdaFruit.cpp"
 #include "logger/Logger.h"
 #include "logger/Logger.cpp"
+#include "logger/FaultDetector.h"
+#include "logger/FaultDetector.cpp"
 
 auto pump_relay = PumpRelay(PUMP_RELAY_PIN);
 auto moisture_sensor = MoistureSensor(MOISTURE_PIN);
@@ -43,6 +50,7 @@ auto initial_state = Idle();
 auto wifi_manager = WifiManager(WIFI_SSID, WIFI_PASSWORD);
 auto adafruit = AdaFruit(IO_USERNAME, AIO_SERVER, IO_KEY, AIO_SERVERPORT);
 auto console_logger = Logger();
+auto fault_detector = FaultDetector();
 
 
 void setup() {
@@ -52,14 +60,16 @@ void setup() {
   controller.addPumpRelay(&pump_relay);
   controller.addWaterLowLED(&water_low_led);
   controller.addHeatDetector(&wifi_heat_detector);
+  controller.addFaultDetector(&fault_detector);
   controller.registerObserver(&adafruit);
   controller.registerObserver(&console_logger);
+  controller.registerObserver(&fault_detector);
   controller.setState(&initial_state);
   wifi_manager.connect();
   adafruit.connect();
-  adafruit.addFeed("moisture");
-  adafruit.addFeed("water_level");
-  adafruit.addFeed("temperature");
+  adafruit.addFeed(constants::event_dryness);
+  adafruit.addFeed(constants::event_water_level);
+  adafruit.addFeed(constants::event_temperature);
 }
 
 void loop() {

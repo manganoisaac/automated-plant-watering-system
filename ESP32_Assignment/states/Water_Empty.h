@@ -2,7 +2,8 @@
 #define WATER_EMPTY_H
 
 #include "../controller/Controller.h"
-class WaterEmpty : public IState {
+#include "StateBase.h"
+class WaterEmpty : public StateBase {
 public:
   void next(Controller *controller) override;
 };

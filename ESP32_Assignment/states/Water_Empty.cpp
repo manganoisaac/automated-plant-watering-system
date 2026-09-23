@@ -1,4 +1,5 @@
 #include "Water_Empty.h"
+#include "../constants.h"
 #include "../controller/Controller.h"
 #include "Arduino.h"
 #include "HardwareSerial.h"
@@ -16,27 +17,27 @@ void WaterEmpty::next(Controller *controller) {
   auto distance = controller->readUltrasonic();
 
   // notify observers
-  controller->notify("water_level", std::to_string(distance));
+  controller->notify(constants::event_water_level, std::to_string(distance));
 
   // is water refilled
-  if (distance < 100) {
+  if (distance < constants::lower_water_level_threshold) {
 
     // check moisture
-    auto moisture = controller->readMoisture();
+    auto dryness = controller->readMoisture();
 
-    controller->notify("moisture", std::to_string(moisture));
+    controller->notify(constants::event_dryness, std::to_string(dryness));
 
     // if soil is dry, set to watering state
-    if (moisture < 3000) {
+    if (dryness > constants::upper_dryness_threshold) {
       Serial.println("Switching to watering state");
-      static auto watering_state = Watering();
-      controller->setState(&watering_state);
+      this->to_watering(controller);
       return;
     }
 
     // otherwise, set to idle
     Serial.println("Switching state to Idle");
-    static auto idle_state = Idle();
-    controller->setState(&idle_state);
+    this->to_idle(controller);
   }
+
+  this->sleep(10 * 60 * 1000);
 }
