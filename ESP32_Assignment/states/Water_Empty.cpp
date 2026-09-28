@@ -1,3 +1,4 @@
+//Includes
 #include "Water_Empty.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
@@ -5,6 +6,8 @@
 #include "HardwareSerial.h"
 #include "Idle.h"
 #include "Watering.h"
+
+//Turns the water-low LED on and waits here until the tank is refilled
 void WaterEmpty::next(Controller *controller) {
 
   Serial.println("Water empty state");

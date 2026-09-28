@@ -1,7 +1,11 @@
+//Header guard
 #ifndef STATE_BASE_H
 #define STATE_BASE_H
+
+//Includes
 #include "IState.h"
 
+//Shared base class for all states, holds the functions used to switch state
 class StateBase : public IState {
 protected:
   void to_error(Controller *controller);

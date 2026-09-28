@@ -1,4 +1,4 @@
-
+//Includes
 #include "Idle_Hot_Day.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
@@ -7,6 +7,7 @@
 #include "Idle.h"
 #include "Watering.h"
 
+//Same checks as Idle, but also drops back to Idle once it cools down
 void IdleHotDay::next(Controller *controller) {
   Serial.println("Idle Hot Day state");
 

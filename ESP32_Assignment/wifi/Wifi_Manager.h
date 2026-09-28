@@ -1,8 +1,11 @@
+//Header guard
 #ifndef WIFI_MANAGER_H
-
 #define WIFI_MANAGER_H
 
+//Includes
 #include <string>
+
+//Connects the ESP32 to wifi
 class WifiManager {
 private:
   std::string SSID;

@@ -1,9 +1,12 @@
+//Includes
 #include "FaultDetector.h"
 #include "../constants.h"
 #include "FaultStatus.h"
 #include "HardwareSerial.h"
 #include <string>
 #include <vector>
+
+//Checks the incoming reading against a safe range and stores it in history
 void FaultDetector::notify(std::string event, std::string data_string) {
   // convert data to double, (error handling?)
   double data = std::stod(data_string);
@@ -54,6 +57,7 @@ void FaultDetector::notify(std::string event, std::string data_string) {
   }
 }
 
+//Returns a list of which readings are currently out of range
 std::vector<FaultStatus> FaultDetector::status() {
   std::vector<FaultStatus> faults;
   if (this->dryness_faulty) {

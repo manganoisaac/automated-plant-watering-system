@@ -1,3 +1,4 @@
+//Includes
 #include "Controller.h"
 #include "../actuators/IActuator.h"
 #include "../logger/FaultDetector.h"
@@ -7,6 +8,7 @@
 
 void Controller::setState(IState *state) { this->state = state; }
 
+//Each add stores the device and calls its setup()
 void Controller::addUltrasonic(ISensor *ultrasonic_sensor) {
   this->ultrasonic_sensor = ultrasonic_sensor;
   this->ultrasonic_sensor->setup();
@@ -40,6 +42,7 @@ void Controller::registerObserver(IObserver *observer) {
   observers.push_back(observer);
 };
 
+//Tells every registered observer (e.g. logger) that an event happened
 void Controller::notify(std::string event, std::string data) {
   for (auto observer : observers) {
     observer->notify(event, data);
@@ -64,4 +67,5 @@ void Controller::waterLowOn() { water_low_led->turnOn(); }
 
 void Controller::waterLowOff() { water_low_led->turnOff(); }
 
+//Moves the state machine forward by one step
 void Controller::step() { state->next(this); }

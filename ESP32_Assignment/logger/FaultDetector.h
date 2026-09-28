@@ -1,11 +1,15 @@
+//Header guard
 #ifndef FAULT_DETECTOR_H
 #define FAULT_DETECTOR_H
 
+//Includes
 #include "FaultStatus.h"
 #include "IObserver.h"
 #include <deque>
 #include <queue>
 #include <vector>
+
+//Observer that watches sensor readings and flags when one goes out of range
 class FaultDetector : public IObserver {
 private:
   std::deque<double> dryness_readings;
