@@ -38,7 +38,7 @@ void StateBase::to_water_empty(Controller *controller) {
 //Puts the ESP32 into deep sleep to save power
 void StateBase::sleep(int millis) {
   Serial.println("Going to sleep");
-  esp_sleep_enable_timer_wakeup(5 * 1000 * 1000ULL);
+  esp_sleep_enable_timer_wakeup((uint64_t)millis * 1000ULL);
   esp_wifi_stop();
   // esp_light_sleep_start();
   esp_deep_sleep_start();

@@ -28,6 +28,7 @@ public:
 
   void notify(std::string event, std::string data) override;
   void connect();
+  bool isConnected();
   void addFeed(std::string feedName);
 };
 

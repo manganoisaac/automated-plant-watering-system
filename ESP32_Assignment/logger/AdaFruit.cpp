@@ -24,6 +24,9 @@ void AdaFruit::connect() {
   }
 }
 
+//Checks if the MQTT connection to Adafruit IO is still alive
+bool AdaFruit::isConnected() { return mqtt->connected(); }
+
 //Publishes the data to the matching feed if one is registered for this event
 void AdaFruit::notify(std::string event, std::string data) {
   if (feeds.count(event)) {

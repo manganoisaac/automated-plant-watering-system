@@ -38,6 +38,8 @@ void Error::next(Controller *controller) {
       this->to_idle(controller);
       return;
     }
-    this->sleep(60 * 60 * 1000);
   }
+
+  // fault still active, wait a bit before checking again
+  this->sleep(5 * 60 * 1000);
 }

@@ -84,6 +84,16 @@ void setup() {
 
 //runs repeatedly advancing the state machine every 5 seconds
 void loop() {
+  // reconnect wifi if it dropped
+  if (!wifi_manager.isConnected()) {
+    wifi_manager.connect();
+  }
+
+  // reconnect to adafruit if the MQTT connection dropped
+  if (!adafruit.isConnected()) {
+    adafruit.connect();
+  }
+
   controller.step();
   delay(5000);
 }
