@@ -1,23 +1,21 @@
-//Includes
+// Includes
 #include "Ultrasonic_Sensor.h"
 #include "Arduino.h"
 #include "esp32-hal-gpio.h"
 #include "esp32-hal.h"
 
-//Stores which pins the sensor's trigger and echo wires are connected to
+// Stores which pins the sensor's trigger and echo wires are connected to
 UltrasonicSensor::UltrasonicSensor(int trigPin, int echoPin)
     : trigPin(trigPin), echoPin(echoPin) {};
 
-//Nick: Do we need to implement these can do it if we want
+// Setup trigger and echo pins
 void UltrasonicSensor::setup() {
-  // TODO: implement with library
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 }
 
-//Sends pulse to trigger, times echo bounceback, converts to distance
+// Sends pulse to trigger, times echo bounceback, converts to distance
 float UltrasonicSensor::read() {
-  // TODO: implement
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
 

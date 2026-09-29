@@ -15,9 +15,6 @@
 // Hub that holds the sensors/actuators and lets the states use them
 class Controller {
 private:
-  // TODO: Use smart pointers (unique pointers)
-  // Nick: I dont think we need ^^ smart pointers just cost more ram for
-  // something this small
   FaultDetector *fault_detector;
   ISensor *ultrasonic_sensor;
   ISensor *moisture_sensor;
