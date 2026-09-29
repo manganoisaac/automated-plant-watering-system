@@ -1,4 +1,4 @@
-//Includes
+// Includes
 #include "Controller.h"
 #include "../actuators/IActuator.h"
 #include "../logger/FaultDetector.h"
@@ -8,7 +8,7 @@
 
 void Controller::setState(IState *state) { this->state = state; }
 
-//Each add stores the device and calls its setup()
+// Each add stores the device and calls its setup()
 void Controller::addUltrasonic(ISensor *ultrasonic_sensor) {
   this->ultrasonic_sensor = ultrasonic_sensor;
   this->ultrasonic_sensor->setup();
@@ -29,6 +29,26 @@ void Controller::addWaterLowLED(IActuator *water_low_led) {
   this->water_low_led->setup();
 }
 
+void Controller::addErrorLED(IActuator *error_led) {
+  this->error_led = error_led;
+  this->error_led->setup();
+}
+
+void Controller::addIdleOrWateringLED(IActuator *idle_or_watering_led) {
+  this->idle_or_watering_led = idle_or_watering_led;
+  this->idle_or_watering_led->setup();
+}
+
+void Controller::addHotDayLED(IActuator *hot_day_led) {
+  this->hot_day_led = hot_day_led;
+  this->hot_day_led->setup();
+}
+
+void Controller ::addAlertBuzzer(IActuator *alert_buzzer) {
+  this->alert_buzzer = alert_buzzer;
+  this->alert_buzzer->setup();
+}
+
 void Controller::addHeatDetector(ISensor *heat_detector) {
   this->heat_detector = heat_detector;
   this->heat_detector->setup();
@@ -42,7 +62,7 @@ void Controller::registerObserver(IObserver *observer) {
   observers.push_back(observer);
 };
 
-//Tells every registered observer (e.g. logger) that an event happened
+// Tells every registered observer (e.g. logger) that an event happened
 void Controller::notify(std::string event, std::string data) {
   for (auto observer : observers) {
     observer->notify(event, data);
@@ -67,5 +87,21 @@ void Controller::waterLowOn() { water_low_led->turnOn(); }
 
 void Controller::waterLowOff() { water_low_led->turnOff(); }
 
-//Moves the state machine forward by one step
+void Controller::idleOrWateringOn() { idle_or_watering_led->turnOn(); }
+
+void Controller::hotDayOn() { hot_day_led->turnOn(); }
+
+void Controller::errorOn() { error_led->turnOn(); }
+
+void Controller::alertBuzzerOn() { alert_buzzer->turnOn(); }
+
+void Controller::resetLEDs() {
+  water_low_led->turnOff();
+  idle_or_watering_led->turnOff();
+  hot_day_led->turnOff();
+  error_led->turnOff();
+  alert_buzzer->turnOff();
+}
+
+// Moves the state machine forward by one step
 void Controller::step() { state->next(this); }

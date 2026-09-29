@@ -61,12 +61,15 @@ void FaultDetector::notify(std::string event, std::string data_string) {
 std::vector<FaultStatus> FaultDetector::status() {
   std::vector<FaultStatus> faults;
   if (this->dryness_faulty) {
+    Serial.println("dryness is faulty");
     faults.push_back(FaultStatus::dryness);
   }
   if (this->water_level_faulty) {
+    Serial.println("water level is faulty");
     faults.push_back(FaultStatus::water_level);
   }
   if (this->heat_faulty) {
+    Serial.println("temperature is faulty");
     faults.push_back(FaultStatus::temperature);
   }
   // check range, if sensor values dont change then something is broken

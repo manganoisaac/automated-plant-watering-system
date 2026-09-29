@@ -12,8 +12,9 @@ void IdleHotDay::next(Controller *controller) {
   Serial.println("Idle Hot Day state");
 
   // set actuators for state
+  controller->resetLEDs();
+  controller->hotDayOn();
   controller->pumpOff();
-  controller->waterLowOff();
 
   // read sensors
   auto dryness = controller->readMoisture();
@@ -42,5 +43,5 @@ void IdleHotDay::next(Controller *controller) {
     this->to_idle(controller);
     return;
   }
-  this->sleep(60 * 60 * 1000);
+  this->sleep(constants::idle_hot_day_sleep_duration);
 }

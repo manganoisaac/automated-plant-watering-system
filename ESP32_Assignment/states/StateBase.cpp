@@ -1,5 +1,6 @@
-//Includes
+// Includes
 #include "StateBase.h"
+#include "../constants.h"
 #include "../controller/Controller.h"
 #include "Error.h"
 #include "Idle.h"
@@ -9,7 +10,7 @@
 #include "esp_sleep.h"
 #include "esp_wifi.h"
 
-//Each to creates its state only once and switches the controller to it
+// Each to creates its state only once and switches the controller to it
 void StateBase::to_error(Controller *controller) {
   static auto error_state = Error();
   controller->setState(&error_state);
@@ -35,13 +36,23 @@ void StateBase::to_water_empty(Controller *controller) {
   controller->setState(&water_empty);
 }
 
-//Puts the ESP32 into deep sleep to save power
+// Puts the ESP32 into deep sleep to save power
 void StateBase::sleep(int millis) {
-  Serial.println("Going to sleep");
-  esp_sleep_enable_timer_wakeup((uint64_t)millis * 1000ULL);
-  esp_wifi_stop();
-  // esp_light_sleep_start();
-  esp_deep_sleep_start();
-  // never runs on deep sleep
-  Serial.println("Waking up");
+  if (constants::sleep_enabled) {
+    Serial.println("Going to sleep");
+
+    // set sleep duration
+    esp_sleep_enable_timer_wakeup((uint64_t)millis * 1000ULL);
+
+    // disable wifi for sleep
+    esp_wifi_stop();
+
+    // enable sleep
+    // TODO: choose between light sleep and deep sleep
+    esp_light_sleep_start();
+    // esp_deep_sleep_start();
+
+    // wake-up point for light sleep, never runs on deep sleep
+    Serial.println("Waking up");
+  }
 }

@@ -11,8 +11,8 @@ void Watering::next(Controller *controller) {
   Serial.println("Watering State");
 
   // set actuators
+  controller->resetLEDs();
   controller->pumpOn();
-  controller->waterLowOff();
 
   // read sensors
   auto dryness = controller->readMoisture();

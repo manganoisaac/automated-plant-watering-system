@@ -1,4 +1,4 @@
-//Header guard
+// Header guard
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
@@ -12,19 +12,21 @@
 #include <string>
 #include <vector>
 
-//Hub that holds the sensors/actuators and lets the states use them
+// Hub that holds the sensors/actuators and lets the states use them
 class Controller {
 private:
-  // TODO: Use smart pointers (unique pointers)
-  //Nick: I dont think we need ^^ smart pointers just cost more ram for something this small
   FaultDetector *fault_detector;
   ISensor *ultrasonic_sensor;
   ISensor *moisture_sensor;
   ISensor *heat_detector;
   IActuator *pump_relay;
   IActuator *water_low_led;
-  IState *state;    //Current state in the state machine
-  std::vector<IObserver *> observers; //Listening for events
+  IActuator *idle_or_watering_led;
+  IActuator *hot_day_led;
+  IActuator *error_led;
+  IActuator *alert_buzzer;
+  IState *state;                      // Current state in the state machine
+  std::vector<IObserver *> observers; // Listening for events
 
 public:
   void setState(IState *state);
@@ -36,6 +38,14 @@ public:
   void addPumpRelay(IActuator *pump_relay);
 
   void addWaterLowLED(IActuator *water_low_led);
+
+  void addErrorLED(IActuator *error_led);
+
+  void addIdleOrWateringLED(IActuator *idle_or_watering_led);
+
+  void addHotDayLED(IActuator *hot_day_led);
+
+  void addAlertBuzzer(IActuator *alert_buzzer);
 
   void addHeatDetector(ISensor *heat_detector);
 
@@ -60,6 +70,16 @@ public:
   void waterLowOn();
 
   void waterLowOff();
+
+  void idleOrWateringOn();
+
+  void hotDayOn();
+
+  void errorOn();
+
+  void alertBuzzerOn();
+
+  void resetLEDs();
 
   void step();
 };

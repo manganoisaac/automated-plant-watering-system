@@ -11,13 +11,15 @@
 #include "esp_sleep.h"
 #include <string>
 
-// Default state, checks sensors and switches to error/watering/hot-day states if needed
+// Default state, checks sensors and switches to error/watering/hot-day states
+// if needed
 void Idle::next(Controller *controller) {
   Serial.println("Idle state");
 
   // set actuators for state
+  controller->resetLEDs();
+  controller->idleOrWateringOn();
   controller->pumpOff();
-  controller->waterLowOff();
 
   // read sensors
   auto dryness = controller->readMoisture();
@@ -57,5 +59,5 @@ void Idle::next(Controller *controller) {
     return;
   }
 
-  this->sleep(60 * 60 * 1000);
+  this->sleep(constants::idle_sleep_duration);
 }
