@@ -7,6 +7,8 @@
 #include "Idle_Hot_Day.h"
 #include "Water_Empty.h"
 #include "Watering.h"
+#include "WiFi.h"
+#include "WiFiType.h"
 #include "esp_sleep.h"
 #include "esp_wifi.h"
 
@@ -42,10 +44,13 @@ void StateBase::sleep(int millis) {
     Serial.println("Going to sleep");
 
     // set sleep duration
-    esp_sleep_enable_timer_wakeup((uint64_t)millis * 1000ULL);
+    // esp_sleep_enable_timer_wakeup((uint64_t)millis * 1000ULL);
+
+    // dummy for testing
+    esp_sleep_enable_timer_wakeup(2000 * 1000ULL);
 
     // disable wifi for sleep
-    esp_wifi_stop();
+    WiFi.mode(WIFI_OFF);
 
     // enable sleep
     // TODO: choose between light sleep and deep sleep

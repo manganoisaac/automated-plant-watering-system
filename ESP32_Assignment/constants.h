@@ -42,6 +42,6 @@ inline constexpr int max_on_device_readings = 10;
 // ---------------------------
 
 // turn off to test quick state changes
-inline constexpr bool sleep_enabled = false;
+inline constexpr bool sleep_enabled = true;
 
 } // namespace constants
