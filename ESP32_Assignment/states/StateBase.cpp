@@ -1,3 +1,4 @@
+//Includes
 #include "StateBase.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
@@ -8,6 +9,8 @@
 #include "Watering.h"
 #include "esp_sleep.h"
 #include "esp_wifi.h"
+
+//Each to creates its state only once and switches the controller to it
 void StateBase::to_error(Controller *controller) {
   static auto error_state = Error();
   controller->setState(&error_state);
@@ -33,6 +36,7 @@ void StateBase::to_water_empty(Controller *controller) {
   controller->setState(&water_empty);
 }
 
+//Puts the ESP32 into deep sleep to save power
 void StateBase::sleep(int millis) {
   Serial.println("Going to sleep");
   if (constants::sleep_enabled) {

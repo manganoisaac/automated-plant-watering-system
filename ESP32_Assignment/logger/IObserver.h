@@ -1,8 +1,11 @@
+//Header guard
 #ifndef IOBSERVER_H
-
 #define IOBSERVER_H
 
+//Includes
 #include <string>
+
+//Interface for anything event observers
 class IObserver {
 
 public:

@@ -1,6 +1,8 @@
+// Header guard
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+// Includes
 #include "../actuators/IActuator.h"
 #include "../logger/FaultDetector.h"
 #include "../logger/FaultStatus.h"
@@ -9,9 +11,13 @@
 #include "../states/IState.h"
 #include <string>
 #include <vector>
+
+// Hub that holds the sensors/actuators and lets the states use them
 class Controller {
 private:
   // TODO: Use smart pointers (unique pointers)
+  // Nick: I dont think we need ^^ smart pointers just cost more ram for
+  // something this small
   FaultDetector *fault_detector;
   ISensor *ultrasonic_sensor;
   ISensor *moisture_sensor;
@@ -22,8 +28,8 @@ private:
   IActuator *hot_day_led;
   IActuator *error_led;
   IActuator *alert_buzzer;
-  IState *state;
-  std::vector<IObserver *> observers;
+  IState *state;                      // Current state in the state machine
+  std::vector<IObserver *> observers; // Listening for events
 
 public:
   void setState(IState *state);

@@ -1,3 +1,4 @@
+// Includes
 #include "Error.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
@@ -7,6 +8,7 @@
 #include "Idle_Hot_Day.h"
 #include <string>
 
+// Keeps the pump off and waits for the fault to clear before returning to Idle
 void Error::next(Controller *controller) {
   Serial.println("Error State");
 

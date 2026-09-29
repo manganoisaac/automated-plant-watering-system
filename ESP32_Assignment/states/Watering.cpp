@@ -1,9 +1,12 @@
+//Includes
 #include "Watering.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
 #include "Arduino.h"
 #include "HardwareSerial.h"
 #include "Idle.h"
+
+//Runs the pump until the soil is moist enough, then goes back to Idle
 void Watering::next(Controller *controller) {
   Serial.println("Watering State");
 

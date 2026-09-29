@@ -1,6 +1,11 @@
+//Entry File
+//Includes both the .h and .cpp of each class
+//Because Arduino only auto-compiles files in this folder not subfolders
 #include "sensors/Moisture_Sensor.h"
 #include "secrets.h"
 #include "constants.h"
+
+//Pin numbers
 #define MOISTURE_PIN 4
 #define ULTRASONIC_TRIG_PIN 5
 #define ULTRASONIC_ECHO_PIN 6
@@ -10,6 +15,8 @@
 #define WATERING_OR_IDLE_LED_PIN 10
 #define HOT_DAY_LED_PIN 11
 #define ALERT_BUZZER_PIN 12
+
+//Includes
 #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 #include "sensors/Moisture_Sensor.cpp"
@@ -44,6 +51,8 @@
 #include "logger/FaultDetector.h"
 #include "logger/FaultDetector.cpp"
 
+//One global instance of each sensor/actuator/etc
+//These live for the whole run of the program
 auto pump_relay = PumpRelay(PUMP_RELAY_PIN);
 auto moisture_sensor = MoistureSensor(MOISTURE_PIN);
 auto ultrasonic_sensor = UltrasonicSensor(ULTRASONIC_TRIG_PIN, ULTRASONIC_ECHO_PIN);
@@ -61,6 +70,7 @@ auto console_logger = Logger();
 auto fault_detector = FaultDetector();
 
 
+//Runs once at boot, joins everything and connects to wifi
 void setup() {
   Serial.begin(9600);
   controller.addMoistureSensor(&moisture_sensor);
@@ -84,6 +94,7 @@ void setup() {
   adafruit.addFeed(constants::event_temperature);
 }
 
+//runs repeatedly advancing the state machine every 5 seconds
 void loop() {
   controller.step();
   delay(5000);

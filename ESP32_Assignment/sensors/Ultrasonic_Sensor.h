@@ -1,12 +1,15 @@
+//Header guard
 #ifndef ULTRASONIC_SENSOR_H
-#include "ISensor.h"
 
+//Includes
+#include "ISensor.h"
 #define ULTRASONIC_SENSOR_H
 
+//Measures distance (used to check the water level in the tank)
 class UltrasonicSensor : public ISensor {
 private:
-  int trigPin;
-  int echoPin;
+  int trigPin; //Pin that sends out the pulse
+  int echoPin; //Pin that the pulse bounces back on
 
 public:
   UltrasonicSensor(int trigPin, int echoPin);

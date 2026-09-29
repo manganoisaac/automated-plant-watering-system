@@ -1,3 +1,4 @@
+//Includes
 #include "AdaFruit.h"
 #include "Arduino.h"
 #include <Adafruit_MQTT.h>
@@ -5,6 +6,7 @@
 #include <WiFiClient.h>
 #include <cstring>
 
+//Stores the login details and sets up the MQTT client
 AdaFruit::AdaFruit(std::string username, std::string server, std::string key,
                    int port)
     : username(username), server(server), key(key), port(port) {
@@ -13,6 +15,7 @@ AdaFruit::AdaFruit(std::string username, std::string server, std::string key,
                                this->username.c_str(), this->key.c_str());
 }
 
+//Keeps retrying until connected to Adafruit IO over MQTT
 void AdaFruit::connect() {
   Serial.println("connecting to adafruit");
   while (mqtt->connect() != 0) {
@@ -21,6 +24,7 @@ void AdaFruit::connect() {
   }
 }
 
+//Publishes the data to the matching feed if one is registered for this event
 void AdaFruit::notify(std::string event, std::string data) {
   if (feeds.count(event)) {
 
@@ -28,6 +32,7 @@ void AdaFruit::notify(std::string event, std::string data) {
   }
 }
 
+//Registers a new feed so notify() can publish to it later
 void AdaFruit::addFeed(std::string feedName) {
   std::string topic = username + "/feeds/" + feedName;
 

@@ -1,3 +1,4 @@
+// Includes
 #include "Idle.h"
 #include "../constants.h"
 #include "../controller/Controller.h"
@@ -10,6 +11,7 @@
 #include "esp_sleep.h"
 #include <string>
 
+// Default state, checks sensors and switches to error/watering/hot-day states if needed
 void Idle::next(Controller *controller) {
   Serial.println("Idle state");
 

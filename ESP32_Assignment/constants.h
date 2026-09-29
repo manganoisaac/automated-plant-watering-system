@@ -1,6 +1,8 @@
+// Header guard (shorthand for the #ifndef/#define/#endif used elsewhere)
 #pragma once
-
 #include <string>
+
+// Groups these constants under constants:: so they don't clash with other names
 namespace constants {
 // low and high thresholds for hysterisis
 
