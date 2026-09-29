@@ -11,10 +11,10 @@ namespace constants {
 inline constexpr double lower_dryness_threshold = 1500;
 inline constexpr double upper_dryness_threshold = 3000;
 
-// HEAT
+// HEAT (kelvin)
 // -------
-inline constexpr double lower_heat_threshold = 200;
-inline constexpr double upper_heat_threshold = 250;
+inline constexpr double lower_heat_threshold = 301; // 28 deg C
+inline constexpr double upper_heat_threshold = 303; // 30 deg C
 
 // WATER LEVEL
 // -------------
