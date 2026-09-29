@@ -11,7 +11,10 @@ void Error::next(Controller *controller) {
   Serial.println("Error State");
 
   // set actuators
+  controller->resetLEDs();
+  controller->errorOn();
   controller->pumpOff();
+  controller->alertBuzzerOn();
 
   // read from sensors
   auto temperature = controller->readHeatDetector();
@@ -36,6 +39,6 @@ void Error::next(Controller *controller) {
       this->to_idle(controller);
       return;
     }
-    this->sleep(60 * 60 * 1000);
+    this->sleep(constants::error_sleep_duration);
   }
 }

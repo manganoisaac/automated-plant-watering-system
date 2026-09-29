@@ -25,6 +25,13 @@ inline std::string event_dryness = "moisture";
 inline std::string event_water_level = "water_level";
 inline std::string event_temperature = "temperature";
 
+// Sleep Durations
+// ---------------
+inline constexpr int idle_sleep_duration = 2 * 60 * 60 * 1000 * 1000ULL;
+inline constexpr int idle_hot_day_sleep_duration = 1 * 60 * 60 * 1000 * 1000ULL;
+inline constexpr int error_sleep_duration = 20 * 60 * 1000 * 1000ULL;
+inline constexpr int water_empty_sleep_duration = 20 * 60 * 1000 * 1000ULL;
+
 // Hyper Parameters
 // ---------------
 inline constexpr int max_on_device_readings = 10;
@@ -33,6 +40,6 @@ inline constexpr int max_on_device_readings = 10;
 // ---------------------------
 
 // turn off to test quick state changes
-inline constexpr bool sleep_enabled = true;
+inline constexpr bool sleep_enabled = false;
 
 } // namespace constants

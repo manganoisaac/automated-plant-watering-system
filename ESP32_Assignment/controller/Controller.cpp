@@ -27,6 +27,26 @@ void Controller::addWaterLowLED(IActuator *water_low_led) {
   this->water_low_led->setup();
 }
 
+void Controller::addErrorLED(IActuator *error_led) {
+  this->error_led = error_led;
+  this->error_led->setup();
+}
+
+void Controller::addIdleOrWateringLED(IActuator *idle_or_watering_led) {
+  this->idle_or_watering_led = idle_or_watering_led;
+  this->idle_or_watering_led->setup();
+}
+
+void Controller::addHotDayLED(IActuator *hot_day_led) {
+  this->hot_day_led = hot_day_led;
+  this->hot_day_led->setup();
+}
+
+void Controller ::addAlertBuzzer(IActuator *alert_buzzer) {
+  this->alert_buzzer = alert_buzzer;
+  this->alert_buzzer->setup();
+}
+
 void Controller::addHeatDetector(ISensor *heat_detector) {
   this->heat_detector = heat_detector;
   this->heat_detector->setup();
@@ -63,5 +83,21 @@ void Controller::pumpOff() { pump_relay->turnOff(); }
 void Controller::waterLowOn() { water_low_led->turnOn(); }
 
 void Controller::waterLowOff() { water_low_led->turnOff(); }
+
+void Controller::idleOrWateringOn() { idle_or_watering_led->turnOn(); }
+
+void Controller::hotDayOn() { hot_day_led->turnOn(); }
+
+void Controller::errorOn() { error_led->turnOn(); }
+
+void Controller::alertBuzzerOn() { alert_buzzer->turnOn(); }
+
+void Controller::resetLEDs() {
+  water_low_led->turnOff();
+  idle_or_watering_led->turnOff();
+  hot_day_led->turnOff();
+  error_led->turnOff();
+  alert_buzzer->turnOff();
+}
 
 void Controller::step() { state->next(this); }

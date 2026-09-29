@@ -18,6 +18,10 @@ private:
   ISensor *heat_detector;
   IActuator *pump_relay;
   IActuator *water_low_led;
+  IActuator *idle_or_watering_led;
+  IActuator *hot_day_led;
+  IActuator *error_led;
+  IActuator *alert_buzzer;
   IState *state;
   std::vector<IObserver *> observers;
 
@@ -31,6 +35,14 @@ public:
   void addPumpRelay(IActuator *pump_relay);
 
   void addWaterLowLED(IActuator *water_low_led);
+
+  void addErrorLED(IActuator *error_led);
+
+  void addIdleOrWateringLED(IActuator *idle_or_watering_led);
+
+  void addHotDayLED(IActuator *hot_day_led);
+
+  void addAlertBuzzer(IActuator *alert_buzzer);
 
   void addHeatDetector(ISensor *heat_detector);
 
@@ -55,6 +67,16 @@ public:
   void waterLowOn();
 
   void waterLowOff();
+
+  void idleOrWateringOn();
+
+  void hotDayOn();
+
+  void errorOn();
+
+  void alertBuzzerOn();
+
+  void resetLEDs();
 
   void step();
 };

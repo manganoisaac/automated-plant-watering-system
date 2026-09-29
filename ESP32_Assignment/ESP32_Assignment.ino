@@ -6,6 +6,10 @@
 #define ULTRASONIC_ECHO_PIN 6
 #define PUMP_RELAY_PIN 7
 #define WATER_LOW_PIN 8
+#define ERROR_LED_PIN 9
+#define WATERING_OR_IDLE_LED_PIN 10
+#define HOT_DAY_LED_PIN 11
+#define ALERT_BUZZER_PIN 12
 #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 #include "sensors/Moisture_Sensor.cpp"
@@ -45,6 +49,10 @@ auto moisture_sensor = MoistureSensor(MOISTURE_PIN);
 auto ultrasonic_sensor = UltrasonicSensor(ULTRASONIC_TRIG_PIN, ULTRASONIC_ECHO_PIN);
 auto wifi_heat_detector = WifiHeatDetector(OPEN_WEATHER_API_KEY, LATUTUDE, LONGITUDE);
 auto water_low_led = LED(WATER_LOW_PIN);
+auto error_led = LED(ERROR_LED_PIN);
+auto watering_or_idle_led = LED(WATERING_OR_IDLE_LED_PIN);
+auto hot_day_led = LED(HOT_DAY_LED_PIN);
+auto alert_buzzer = LED(ALERT_BUZZER_PIN);
 auto controller = Controller();
 auto initial_state = Idle();
 auto wifi_manager = WifiManager(WIFI_SSID, WIFI_PASSWORD);
@@ -59,6 +67,10 @@ void setup() {
   controller.addUltrasonic(&ultrasonic_sensor);
   controller.addPumpRelay(&pump_relay);
   controller.addWaterLowLED(&water_low_led);
+  controller.addErrorLED(&error_led);
+  controller.addAlertBuzzer(&alert_buzzer);
+  controller.addIdleOrWateringLED(&watering_or_idle_led);
+  controller.addHotDayLED(&hot_day_led);
   controller.addHeatDetector(&wifi_heat_detector);
   controller.addFaultDetector(&fault_detector);
   controller.registerObserver(&adafruit);

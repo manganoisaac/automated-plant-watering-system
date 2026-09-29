@@ -1,4 +1,5 @@
 #include "StateBase.h"
+#include "../constants.h"
 #include "../controller/Controller.h"
 #include "Error.h"
 #include "Idle.h"
@@ -34,10 +35,13 @@ void StateBase::to_water_empty(Controller *controller) {
 
 void StateBase::sleep(int millis) {
   Serial.println("Going to sleep");
-  esp_sleep_enable_timer_wakeup(5 * 1000 * 1000ULL);
-  esp_wifi_stop();
-  // esp_light_sleep_start();
-  esp_deep_sleep_start();
-  // never runs on deep sleep
-  Serial.println("Waking up");
+  if (constants::sleep_enabled) {
+
+    esp_sleep_enable_timer_wakeup(millis);
+    esp_wifi_stop();
+    // esp_light_sleep_start();
+    esp_deep_sleep_start();
+    // never runs on deep sleep
+    Serial.println("Waking up");
+  }
 }

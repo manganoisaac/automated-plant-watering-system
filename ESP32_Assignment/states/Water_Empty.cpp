@@ -10,8 +10,10 @@ void WaterEmpty::next(Controller *controller) {
   Serial.println("Water empty state");
 
   // set actuators for state
+  controller->resetLEDs();
   controller->pumpOff();
   controller->waterLowOn();
+  controller->alertBuzzerOn();
 
   // read sensors
   auto distance = controller->readUltrasonic();
@@ -39,5 +41,5 @@ void WaterEmpty::next(Controller *controller) {
     this->to_idle(controller);
   }
 
-  this->sleep(10 * 60 * 1000);
+  this->sleep(constants::water_empty_sleep_duration);
 }
